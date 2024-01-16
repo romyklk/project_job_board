@@ -41,11 +41,22 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // Création du roles de l'utilisateur en fonction de son status(Professionnel ou Candidat)
+
+            //dd($form->get('status')->getData());
+            // Si le status est égal à Professionnel alors le role de l'utilisateur sera ROLE_PRO
+            if ($form->get('status')->getData() === 'Professionnel') {
+                $user->setRoles(['ROLE_PRO']);
+            }
+
+
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('romy@romy.com', 'JobDeed'))
                     ->to($user->getEmail())
