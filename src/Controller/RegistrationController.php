@@ -53,6 +53,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // addFlash() est une méthode de la classe AbstractController qui permet de créer un message flash qui sont dans la session et qui sont affichés une seule fois.
+            $this->addFlash('success', 'Votre compte a bien été créé ! Un email de confirmation vous a été envoyé.');
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
@@ -88,8 +91,8 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre email a bien été vérifié. Vous pouvez maintenant créer votre profil.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_account');
     }
 }

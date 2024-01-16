@@ -1,0 +1,22 @@
+{# Affichage des messages flash qui sont dans la session #}
+{% for flashSuccess in app.session.flashbag.get('success') %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{ flashSuccess }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endfor %}
+
+{% for flashError in app.session.flashbag.get('danger') %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		{{ flashError }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endfor %}
+
+{% for flashError in app.session.flashbag.get('warning') %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		{{ flashError }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endfor %}
+

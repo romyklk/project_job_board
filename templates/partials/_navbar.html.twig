@@ -22,31 +22,32 @@
 
 			{# S'il y a un user connecter #}
 			{% if app.user %}
-			<div class="dropdown text-end">
-				<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-				</a>
-				<ul class="dropdown-menu text-small">
-					<li>
-						<a class="dropdown-item" href="#">New project...</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Settings</a>
-					</li>
-					<li>
-						<a class="dropdown-item" href="#">Profile</a>
-					</li>
-					<li><hr class="dropdown-divider"></li>
-					<li>
-						<a class="dropdown-item" href="#">Sign out</a>
-					</li>
-				</ul>
-			</div>
+				<div class="dropdown text-end">
+					<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+					</a>
+					<ul class="dropdown-menu text-small">
+						<li>
+							<a class="dropdown-item" href="#">New project...</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#">Settings</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#">Profile</a>
+						</li>
+						<li><hr class="dropdown-divider"></li>
+						<li>
+							<a class="dropdown-item" href="{{path('app_logout')}}">Sign out</a>
+						</li>
+					</ul>
+				</div>
 			{% else %}
-			<div class="text-end">
-				<a href="#" class="btn btn-outline-light me-2">Login</a>
-				<a href="#" class="btn btn-warning">Sign-up</a>
-			</div>
+				<div class="text-end">
+					<a href="{{path('app_login')}}" class="btn btn-outline-light me-2">Login</a>
+
+					<a href="{{path('app_register')}}" class="btn btn-warning">Sign-up</a>
+				</div>
 			{% endif %}
 
 		</div>
