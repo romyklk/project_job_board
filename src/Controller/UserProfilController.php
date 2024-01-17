@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\UploadFilesService;
 use App\Entity\UserProfil;
 use App\Form\UserProfilType;
 use Cocur\Slugify\Slugify;
@@ -15,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserProfilController extends AbstractController
 {
     #[Route('/user/profil', name: 'app_user_profil')]
-    public function index(Request $request,EntityManagerInterface $em): Response
+    public function index(Request $request,EntityManagerInterface $em, UploadFilesService $uploadFilesService): Response
     {
         $userProfil = new UserProfil();
 
@@ -32,8 +33,11 @@ class UserProfilController extends AbstractController
             // Je cré un slug à partir du nom et du prénom de l'utilisateur
             $userProfil->setSlug($slugify->slugify($userProfil->getFirstName() . ' ' . $userProfil->getLastName()));
 
-            
+            $file = $form['imageFile']->getData();
 
+            $file_name = $uploadFilesService->saveFileUpload($file);
+
+            $userProfil->setPicture($file_name);
             $em->persist($userProfil);
             $em->flush();
         }
