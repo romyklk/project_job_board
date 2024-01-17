@@ -43,3 +43,17 @@ p, a, span, li, label, input, textarea, select, button{
 .bg-primary{
     background-color: #ff6d00 !important;
 }
+
+/* SIDEBAR */
+
+.menu-link-items > li > a{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.menu-link-items > li :hover{
+    background-color: #ff6d00;
+    /* transform-box: border-box; */
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}

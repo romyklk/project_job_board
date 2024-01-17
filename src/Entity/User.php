@@ -44,6 +44,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserProfil $userProfil = null;
+
     // L'entité User possède un lifecycle callback qui sont des events doctrine qui vont se déclencher à des moments précis du cycle de vie de l'entité.
     // PrePersist : se déclenche avant l'insertion en base de données.
     // PreUpdate : se déclenche avant la mise à jour en base de données.
@@ -171,6 +174,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getUserProfil(): ?UserProfil
+    {
+        return $this->userProfil;
+    }
+
+    public function setUserProfil(UserProfil $userProfil): static
+    {
+        // set the owning side of the relation if necessary
+        if ($userProfil->getUser() !== $this) {
+            $userProfil->setUser($this);
+        }
+
+        $this->userProfil = $userProfil;
 
         return $this;
     }

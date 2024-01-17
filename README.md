@@ -80,6 +80,8 @@ Dans cette partie, nous allons créer la partie back-end du site web.
         `symfony console make:admin:crud`
     - Modification du `homeController` pour rendre la page d'accueil dynamique à partir des paramètres de la base de données.
 
+## Ce JOUR 
+
 - [x] Dans un quatrième temps, nous allons créer une entité `ContractType` pour gérer les types de contrat.Les différents types de contrat sont: CDI, CDD, Freelance, Stage, Alternance, Intérim,Autre.
     - Création de l'entité `ContractType` qui contient les champs suivants:
         - id (int)
@@ -91,7 +93,6 @@ Dans cette partie, nous allons créer la partie back-end du site web.
     - Creation du crud admin sur l'entity `ContractType`
         `symfony console make:admin:crud` 
         Ajout des ContratTypes dans la base de données par l'admin.
-
 
 ## Partie 3
 
@@ -107,8 +108,7 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
     - Créatin du formulaire d'ajout de tag par l'employeur.
         `symfony console make:form`
-
-    - Création du crud admin sur l'entity `Tag`
+    - Faire le admin crud sur l'entity `Tag` (Seul l'admin peut supprimer des tags)
         `symfony console make:admin:crud`
 
 - [x] Dans un deuxième temps, nous allons mettre à jour le `accountController` avec un sidebar qui contient un menu qui sera différent selon le status de l'utilisateur.
@@ -145,6 +145,9 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
 - [x] Création du controller et du formulaire d'ajout de `UserProfil` par l'utilisateur.
     `symfony console make:form`
+
+- [x] Création du controller `UserProfilController` qui va gérer les informations de l'utilisateur.
+    `symfony console make:controller UserProfilController`
 
 - [x] Créer la route `user/profil/{slug}` qui affiche le profil de l'utilisateur.
 - [x] Créer la route `user/profil/{slug}/edit` qui permet à l'utilisateur de modifier son profil.
