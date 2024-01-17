@@ -53,6 +53,8 @@ class UserProfil
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
 
+    private ?string $imageFile = null;
+
     #[ORM\OneToOne(inversedBy: 'userProfil', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -226,6 +228,18 @@ class UserProfil
     public function setUser(User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?string
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(string $imageFile): static
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }
