@@ -57,4 +57,37 @@ On peut aussi afficher différents dashbord en fonction du rôle de l'utilisateu
 
 Cette méthode va nous permettre de configurer le dashbord.
 
-Elle va nous permettre de changer le titre du dashbord, de mettre un logo, de mettre un lien vers le site, de mettre un lien vers la documentation, de mettre un lien vers la page de connexion, de mettre un lien vers la page de déconnexion,
+Elle va nous permettre de changer le titre du dashbord, de mettre un logo, de mettre un lien vers le site, de mettre un lien vers les traductions, de mettre un lien vers la documentation, de mettre un lien vers la déconnexion,
+
+
+**Méthode configureMenuItems()**
+
+Cette méthode va nous permettre de configurer le menu de navigation du dashbord.
+
+- `yield MenuItem::linkToCrud('Dashboard', 'fa fa-home');` : permet d'afficher le nom du dashbord et l'icone du dashbord.
+
+- `yield MenuItem::linkToCrud('Nom du Menu', 'ICONE FONT AWESOME', Entity::class);` : permet d'afficher le nom du menu, l'icone du menu et le CRUD de l'entité.
+
+- `yield MenuItem::linkToCrud('Nom du Menu', 'ICONE FONT AWESOME', Entity::class)->setPermission('ROLE_ADMIN');` : permet d'afficher le nom du menu, l'icone du menu et le CRUD de l'entité seulement si l'utilisateur a le rôle ROLE_ADMIN.
+
+- `yield MenuItem::linkToCrud('Nom du Menu', 'ICONE FONT AWESOME', Entity::class)->setPermission('ROLE_ADMIN')->setController(OneOfYourCrudController::class);` : permet d'afficher le nom du menu, l'icone du menu et le CRUD de l'entité seulement si l'utilisateur a le rôle ROLE_ADMIN et d'afficher le CRUD de l'entité que nous voulons afficher.
+
+
+La commande `symfony console make:admin:crud` va nous créer un fichier `EntityCrudController.php` dans le dossier `controller/admin`.
+
+Dans ce fichier nous avons une classe `EntityCrudController` qui va hériter de la classe `AbstractCrudController` qui va elle-même hériter de la classe `AbstractEasyAdminController`.
+
+**getEntityFqcn()**  C'est une méthode qui va nous permettre de dire à easyadmin quelle entité nous voulons afficher.
+
+**configureFields(string $pageName): iterable**  C'est une méthode qui va nous permettre de configurer les champs que nous voulons afficher.Nous avons plusieurs types de champs que nous pouvons afficher.
+
+- `TextField::new('nom')` : permet d'afficher un champ de type text.
+- `TextEditorField::new('nom')` : permet d'afficher un champ de type textarea.
+- `BooleanField::new('nom')` : permet d'afficher un champ de type checkbox.
+- `DateField::new('nom')` : permet d'afficher un champ de type date.
+- `DateTimeField::new('nom')` : permet d'afficher un champ de type datetime.
+- `EmailField::new('nom')` : permet d'afficher un champ de type email.
+- `IntegerField::new('nom')` : permet d'afficher un champ de type number.
+- `MoneyField::new('nom')` : permet d'afficher un champ de type number avec un symbole de devise.
+- `SlugField::new('nom')` : permet d'afficher un champ de type text.
+- `ImageField::new('nom')` : permet d'afficher un champ de type file.Pour les images il faut mettre `->setBasePath('chemin vers le dossier public')` pour afficher l'image, `->setUploadDir('chemin vers le dossier public')` pour uploader l'image et `->setUploadedFileNamePattern('[randomhash].[extension]')` pour renommer l'image.
