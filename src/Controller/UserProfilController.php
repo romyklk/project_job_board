@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/account')]
 class UserProfilController extends AbstractController
 {
+    // Création du profil utilisateur
     #[Route('/user/profil', name: 'app_user_profil')]
     public function index(Request $request,EntityManagerInterface $em, UploadFilesService $uploadFilesService): Response
     {
@@ -31,7 +32,7 @@ class UserProfilController extends AbstractController
             $userProfil->setUser($this->getUser());
             
             // Je cré un slug à partir du nom et du prénom de l'utilisateur
-            $userProfil->setSlug($slugify->slugify($userProfil->getFirstName() . ' ' . $userProfil->getLastName()));
+            $userProfil->setSlug($slugify->slugify($userProfil->getFirstName() . ' ' . $userProfil->getLastName() . ' ' . $userProfil->getId()));
 
             $file = $form['imageFile']->getData();
 
@@ -40,9 +41,20 @@ class UserProfilController extends AbstractController
             $userProfil->setPicture($file_name);
             $em->persist($userProfil);
             $em->flush();
+
+            $this->addFlash('success', 'Votre profil a bien été créé !');
         }
         return $this->render('user_profil/index.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    // Affichage du profil utilisateur
+    #[Route('/user/profil/{slug}', name: 'app_user_profil_show')]
+    public function show(UserProfil $userProfil): Response
+    {
+        return $this->render('user_profil/show.html.twig', [
+            'userProfil' => $userProfil,
         ]);
     }
 }

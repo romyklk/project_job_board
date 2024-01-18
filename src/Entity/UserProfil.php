@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserProfilRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserProfilRepository::class)]
 class UserProfil
@@ -15,39 +16,55 @@ class UserProfil
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre prénom.')]
+    #[Assert\Length(min: 2, max: 150, minMessage: 'Votre prénom doit contenir au moins {{ limit }} caractères.', maxMessage: 'Votre prénom doit contenir au maximum {{ limit }} caractères.')]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre nom.')]
+    #[Assert\Length(min: 2, max: 100, minMessage: 'Votre nom doit contenir au moins {{ limit }} caractères.', maxMessage: 'Votre nom doit contenir au maximum {{ limit }} caractères.')]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre adresse.')]
+    #[Assert\Length(min: 2, max: 255, minMessage: 'Votre adresse doit contenir au moins {{ limit }} caractères.', maxMessage: 'Votre adresse doit contenir au maximum {{ limit }} caractères.')]
     private ?string $address = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre ville.')]
+    #[Assert\Length(min: 2, max: 100, minMessage: 'Votre ville doit contenir au moins {{ limit }} caractères.', maxMessage: 'Votre ville doit contenir au maximum {{ limit }} caractères.')]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre code postal.')]
+    #[Assert\Length(min: 5, max: 5, minMessage: 'Votre code postal doit contenir au moins {{ limit }} caractères.', maxMessage: 'Votre code postal doit contenir au maximum {{ limit }} caractères.')]
     private ?string $zipCode = null;
 
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre numéro de téléphone.')]
+    #[Assert\Length(min: 10, max: 10, minMessage: 'Votre numéro de téléphone doit contenir au moins {{ limit }} caractères.', maxMessage: 'Votre numéro de téléphone doit contenir au maximum {{ limit }} caractères.')]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $jobSought = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre présentation.')]
+    #[Assert\Length(min: 10, minMessage: 'Votre présentation doit contenir au moins {{ limit }} caractères.')]
     private ?string $presentation = null;
 
     #[ORM\Column]
     private ?bool $availability = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre site web.')]
+    #[Assert\Url(message: 'Veuillez renseigner une URL valide.')]
     private ?string $website = null;
 
     #[ORM\Column(length: 255)]
