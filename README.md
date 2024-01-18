@@ -137,7 +137,7 @@ Dans cette partie, nous allons créer la partie back-end du site web.
         - phoneNumber (string)
         - jobSought(string) => poste recherché ==>nullable
         - presentation (text)
-        - availability (string) => disponibilité
+        - availability (boolean) => disponibilité
         - website (string)
         - picture (string)
         - user (User) => OneToOne

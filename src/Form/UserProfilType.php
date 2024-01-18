@@ -82,6 +82,7 @@ class UserProfilType extends AbstractType
             ])
             ->add('availability', CheckboxType::class, [
                 'label' => 'Etes-vous disponible ?',
+                'required' => false,
             ])
             ->add('website', UrlType::class, [
                 'label' => false,
@@ -91,6 +92,7 @@ class UserProfilType extends AbstractType
             ])
             ->add('imageFile', FileType::class, [
                 'label' => false,
+                'required' => false,
                 'constraints' => [
                     new Image([
                         'maxSize' => '3M',

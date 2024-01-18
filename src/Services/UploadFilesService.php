@@ -35,4 +35,18 @@ class UploadFilesService extends AbstractController
         return $fileName;
     }
 
+    // Cette méthode va permettre modifier un fichier uploadé dans le dossier public/uploads et de supprimer l'ancien fichier si il existe
+
+    public function updateFileUpload($file, $oldFile)
+    { // Traitement du fichier uploadé par la méthode saveFileUpload
+        $fileName = $this->saveFileUpload($file);
+
+        // Suppression de l'ancien fichier si il existe et si ce n'est pas le fichier par défaut
+        if($oldFile != 'default.png'){
+            unlink($this->getParameter('uploads_directory').'/'.$oldFile);
+        }
+
+        return $fileName;
+    }
+
 }
