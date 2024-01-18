@@ -57,6 +57,8 @@ class UserProfilController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Votre profil a bien été créé !');
+
+            return $this->redirectToRoute('app_user_profil_show', ['slug' => $userProfil->getSlug()]);
         }
         return $this->render('user_profil/index.html.twig', [
             'form' => $form->createView(),
@@ -134,8 +136,10 @@ class UserProfilController extends AbstractController
         $em->remove($userProfil);
         $em->flush();
         
+        // tokenStorageInterface permet de déconnecter l'utilisateur et de supprimer son token de session
         $tokenStorageInterface->setToken(null);
 
+        // On supprime la session(invalidation de la session)
         $session->invalidate();
 
         return $this->redirectToRoute('app_home');

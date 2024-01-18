@@ -5,21 +5,28 @@
 	<hr>
 	{% if app.user.status == "Candidat" %}
 		<ul class="nav nav-pills flex-column mb-auto menu-link-items">
-			<li>
-				<a href="#" class="nav-link text-white">
-					Mes candidatures
-				</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link text-white">
-					Mes informations
-				</a>
-			</li>
+			{% if app.user.userProfil %}
+
+
+				<li>
+					<a href="#" class="nav-link text-white">
+						Mes candidatures
+					</a>
+				</li>
+				<li>
+					<a href="#" class="nav-link text-white">
+						Mes informations
+					</a>
+				</li>
+			{% endif %}
+
 			<li>
 				<a href="{{path('app_user_profil')}}" class="nav-link text-white">
 					Profil
 				</a>
 			</li>
+
+
 		</ul>
 
 	{% else %}

@@ -151,6 +151,7 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
 - [x] Créer la route `user/profil/{slug}` qui affiche le profil de l'utilisateur.
 - [x] Créer la route `user/profil/{slug}/edit` qui permet à l'utilisateur de modifier son profil.
+- [x] Créer la route `user/profil/{slug}/delete` qui permet à l'utilisateur de supprimer son profil. 
 
 - [x] Dans un quatrième temps, nous allons créer une entité `EntrepriseProfil` qui contient les informations de l'entreprise.
     - Création de l'entité `EntrepriseProfil` qui contient les champs suivants:

@@ -47,6 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserProfil $userProfil = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?EntrepriseProfil $entrepriseProfil = null;
+
     // L'entité User possède un lifecycle callback qui sont des events doctrine qui vont se déclencher à des moments précis du cycle de vie de l'entité.
     // PrePersist : se déclenche avant l'insertion en base de données.
     // PreUpdate : se déclenche avant la mise à jour en base de données.
@@ -191,6 +194,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->userProfil = $userProfil;
+
+        return $this;
+    }
+
+    public function getEntrepriseProfil(): ?EntrepriseProfil
+    {
+        return $this->entrepriseProfil;
+    }
+
+    public function setEntrepriseProfil(EntrepriseProfil $entrepriseProfil): static
+    {
+        // set the owning side of the relation if necessary
+        if ($entrepriseProfil->getUser() !== $this) {
+            $entrepriseProfil->setUser($this);
+        }
+
+        $this->entrepriseProfil = $entrepriseProfil;
 
         return $this;
     }
