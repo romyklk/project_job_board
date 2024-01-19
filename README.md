@@ -171,7 +171,11 @@ Dans cette partie, nous allons créer la partie back-end du site web.
         - user (User) => OneToOne
     `symfony console make:entity EntrepriseProfil`
 
-- Créer la route `/entreprise/profil/{slug}` qui affiche le profil de l'entreprise.
+- Créer la route `entreprise/profil/{slug}` qui affiche le profil de l'entreprise.
+
+- [x] Créer la route `entreprise/profil/{slug}/edit` qui permet à l'utilisateur de modifier son profil.
+
+- [x] Créer la route `entreprise/profil/{slug}/delete` qui permet à l'utilisateur de supprimer son profil. 
 
 - Créer la route `/Tag` qui affiche la liste des tags disponibles sur le site sur le profil de l'entreprise et qui inclut un formulaire d'ajout de tag.(Seul l'admin peut supprimer des tags)
 
