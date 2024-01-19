@@ -124,7 +124,7 @@ class UserProfilController extends AbstractController
 
     // Suppression du profil utilisateur
     #[Route('/user/profil/{slug}/delete', name: 'app_user_profil_delete')]
-    public function deleteUserProfil(string $slug, UserProfilRepository $userProfilRepository,EntityManagerInterface $em,SessionInterface $session,TokenStorageInterface $tokenStorageInterface):Response
+    public function deleteUserProfil(string $slug, UserProfilRepository $userProfilRepository,EntityManagerInterface $em,SessionInterface $session,TokenStorageInterface $tokenStorageInterface,UploadFilesService $uploadFilesService):Response
     {
         $user = $this->getUser();
         $userProfil = $userProfilRepository->findOneBy(['slug' => $slug]);
@@ -133,6 +133,9 @@ class UserProfilController extends AbstractController
         if($user !== $userProfil->getUser()) {
             return $this->redirectToRoute('app_user_profil_show', ['slug' => $userProfil->getSlug()]);
         }
+        // Suppression de l'image du profil utilisateur
+        $uploadFilesService->deleteFileUpload($userProfil->getPicture());
+        
         $em->remove($userProfil);
         $em->flush();
         
