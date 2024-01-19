@@ -8,14 +8,13 @@
 
 {% block content %}
 
-{% set entreprise= app.user.entrepriseProfil %}
-
+	{% set entreprise= app.user.entrepriseProfil %}
 
 
 	<div class="container mt-5">
 		<h1 class="text-center mb-4">
 			Domaine d'activité :
-<span class="badge bg-secondary">{{ entreprise.activityArea }}</span>
+			<span class="badge bg-secondary">{{ entreprise.activityArea }}</span>
 
 		</h1>
 		<div class="card card-text mb-4">
@@ -35,7 +34,7 @@
 						{{entreprise.country}}
 					</details>
 					<p>Tel :{{entreprise.phoneNumber}}</p>
-				
+
 				</div>
 			</div>
 			<hr>
@@ -45,7 +44,7 @@
 				<p>
 					{{entreprise.description}}
 				</p>
-				<a href="" class="btn btn-warning">
+				<a href="{{path('app_entreprise_profil_edit',{'slug':entreprise.slug})}}" class="btn btn-warning">
 
 					<i class="bi bi-pencil-square"></i>
 				</a>
@@ -57,4 +56,3 @@
 
 	</div>
 </div>{% endblock %}
-

@@ -25,7 +25,7 @@ class UserProfilController extends AbstractController
         // Vérification si l'utilisateur a déjà un profil et le redirige vers son profil
 
         $user = $this->getUser();
-        if($user->getUserProfil()) {
+        if ($user->getUserProfil()) {
             return $this->redirectToRoute('app_user_profil_show', ['slug' => $user->getUserProfil()->getSlug()]);
         }
 
@@ -92,12 +92,13 @@ class UserProfilController extends AbstractController
 
         $slugify = new Slugify();
         if ($form->isSubmitted() && $form->isValid()) {
-           $userProfil->setSlug(
-                $slugify->slugify(sha1($userProfil->getId())
-                        . $userProfil->getFirstName() . ' ' . $userProfil->getLastName() . ' ' . $userProfil->getId()) . '' . uniqid()
-            ); 
 
-        /*     $userProfil->setSlug(
+            $userProfil->setSlug(
+                $slugify->slugify(sha1($userProfil->getId())
+                    . $userProfil->getFirstName() . ' ' . $userProfil->getLastName() . ' ' . $userProfil->getId()) . '' . uniqid()
+            );
+
+            /*     $userProfil->setSlug(
                 $slugify->slugify(sha1($userProfil->getId())
                     . sha1($userProfil->getFirstName()) . ' ' . sha1($userProfil->getLastName()) . ' ' . $userProfil->getId()) . '' . uniqid()
             ); */
@@ -124,21 +125,21 @@ class UserProfilController extends AbstractController
 
     // Suppression du profil utilisateur
     #[Route('/user/profil/{slug}/delete', name: 'app_user_profil_delete')]
-    public function deleteUserProfil(string $slug, UserProfilRepository $userProfilRepository,EntityManagerInterface $em,SessionInterface $session,TokenStorageInterface $tokenStorageInterface,UploadFilesService $uploadFilesService):Response
+    public function deleteUserProfil(string $slug, UserProfilRepository $userProfilRepository, EntityManagerInterface $em, SessionInterface $session, TokenStorageInterface $tokenStorageInterface, UploadFilesService $uploadFilesService): Response
     {
         $user = $this->getUser();
         $userProfil = $userProfilRepository->findOneBy(['slug' => $slug]);
         // Si  l'utilisateur connecté n'est pas le propriétaire du profil, on le redirige vers son profil
 
-        if($user !== $userProfil->getUser()) {
+        if ($user !== $userProfil->getUser()) {
             return $this->redirectToRoute('app_user_profil_show', ['slug' => $userProfil->getSlug()]);
         }
         // Suppression de l'image du profil utilisateur
         $uploadFilesService->deleteFileUpload($userProfil->getPicture());
-        
+
         $em->remove($userProfil);
         $em->flush();
-        
+
         // tokenStorageInterface permet de déconnecter l'utilisateur et de supprimer son token de session
         $tokenStorageInterface->setToken(null);
 
