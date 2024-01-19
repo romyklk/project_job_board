@@ -5,13 +5,15 @@ namespace App\Controller;
 use Cocur\Slugify\Slugify;
 use App\Entity\EntrepriseProfil;
 use App\Form\EntrepriseProfilType;
-use App\Repository\EntrepriseProfilRepository;
 use App\Services\UploadFilesService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\EntrepriseProfilRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/account')]
 class EntrepriseProfilController extends AbstractController
@@ -103,5 +105,35 @@ class EntrepriseProfilController extends AbstractController
         return $this->render('entreprise_profil/edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    // Suppression du profil entreprise
+    #[Route('/entreprise/profil/{slug}/delete', name: 'app_entreprise_profil_delete')]
+    public function deleteEntrepriseProfil(string $slug, EntrepriseProfilRepository $entrepriseProfilRepository, EntityManagerInterface $em, UploadFilesService $uploadFilesService,TokenStorageInterface $tokenStorageInterface,Session $session): Response 
+    {
+        $user = $this->getUser();
+
+        $entrepriseProfil = $entrepriseProfilRepository->findOneBy(['slug' => $slug]);
+
+        //Si l'utilisateur connecté n'est pas le propriétaire du profil, on le redirige vers son profil
+
+        if(!$entrepriseProfil || $entrepriseProfil->getUser() !== $user){
+            return $this->redirectToRoute('app_entreprise_profil_show', ['slug' => $entrepriseProfil->getSlug()]);
+        }
+
+        //Suppression du logo de l'entreprise
+        $uploadFilesService->deleteFileUpload($entrepriseProfil->getLogo());
+
+        $em->remove($entrepriseProfil);
+        $em->flush();
+
+        //Déconnexion de l'utilisateur
+        $tokenStorageInterface->setToken(null);
+
+        // Suppression de la session
+        $session->invalidate();
+
+
+        return $this->redirectToRoute('app_home');
     }
 }
