@@ -73,8 +73,9 @@ class EntrepriseProfilType extends AbstractType
                     'rows' => '7'
                 ]
             ])
-            ->add('logo',FileType::class, [
+            ->add('logoEntreprise',FileType::class, [
                 'label' => false,
+                'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Entrez le logo de votre entreprise'
                 ]
