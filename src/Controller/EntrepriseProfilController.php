@@ -54,6 +54,8 @@ class EntrepriseProfilController extends AbstractController
 
             $em->persist($entrepriseProfil);
             $em->flush();
+
+            return $this->redirectToRoute('app_entreprise_profil_show', ['slug' => $entrepriseProfil->getSlug()]);
         }
 
         return $this->render('entreprise_profil/index.html.twig', [

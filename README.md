@@ -96,22 +96,7 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
 ## Partie 3
 
-- [x] Dans un premier temps, nous allons créer une entité `Tag` qui sera un ensemble de mots clés qui permettront de décrire les offres d'emploi.
-    - Création de l'entité `Tag` qui contient les champs suivants:
-        - id (int)
-        - name (string)
-        - slug (string)
-    `symfony console make:entity Tag`
-
-    - Installer cocur/slugify pour générer le slug.
-        `composer require cocur/slugify`
-
-    - Créatin du formulaire d'ajout de tag par l'employeur.
-        `symfony console make:form`
-    - Faire le admin crud sur l'entity `Tag` (Seul l'admin peut supprimer des tags)
-        `symfony console make:admin:crud`
-
-- [x] Dans un deuxième temps, nous allons mettre à jour le `accountController` avec un sidebar qui contient un menu qui sera différent selon le status de l'utilisateur.
+- [x] Dans un premier temps, nous allons mettre à jour le `accountController` avec un sidebar qui contient un menu qui sera différent selon le status de l'utilisateur.
     - Un candidat aura un menu avec les liens suivants:
         - Mes candidatures
         - Mes informations
@@ -124,7 +109,7 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
 
 
-- [x] Dans un troisième temps, nous allons créer une  `UserProfil` 
+- [x] Dans un deuxieme temps, nous allons créer une  `UserProfil` 
     qui va permettre à l'utilisateur de modifier ses informations personnelles.Cette entité aura les champs suivants:
         - id (int)
         - firstName (string)
@@ -175,9 +160,27 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
 - [x] Créer la route `entreprise/profil/{slug}/edit` qui permet à l'utilisateur de modifier son profil.
 
-- [x] Créer la route `entreprise/profil/{slug}/delete` qui permet à l'utilisateur de supprimer son profil. 
+- [x] Créer la route `entreprise/profil/{slug}/delete` qui permet à l'utilisateur de supprimer son profil.
+
+- [x] Dans un troisieme temps, nous allons créer une entité `Tag` qui sera un ensemble de mots clés qui permettront de décrire les offres d'emploi.
+    - Création de l'entité `Tag` qui contient les champs suivants:
+        - id (int)
+        - name (string)
+        - slug (string)
+    `symfony console make:entity Tag`
+
+    - Installer cocur/slugify pour générer le slug.
+        `composer require cocur/slugify`
+
+    - Créatin du formulaire d'ajout de tag par l'employeur.
+        `symfony console make:form`
 
 - Créer la route `/Tag` qui affiche la liste des tags disponibles sur le site sur le profil de l'entreprise et qui inclut un formulaire d'ajout de tag.(Seul l'admin peut supprimer des tags)
+  
+    - Faire le admin crud sur l'entity `Tag` (Seul l'admin peut supprimer des tags)
+        `symfony console make:admin:crud`
+
+
 
 ## Partie 4
 - [x] Dans un premier temps, nous allons créer un controller `OfferController` qui va gérer les offres d'emploi.
