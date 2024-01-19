@@ -21,6 +21,11 @@ class EntrepriseProfilController extends AbstractController
         // Récupération de l'utilisateur connecté
         $user = $this->getUser();
 
+        // Vérification si l'utilisateur a déjà un profil et le redirige vers son profil
+        if($user->getEntrepriseProfil()){
+            return $this->redirectToRoute('app_entreprise_profil_show', ['slug' => $user->getEntrepriseProfil()->getSlug()]);
+        }
+
 
         $entrepriseProfil = new EntrepriseProfil();
         // Création du formulaire de profil entreprise
@@ -49,6 +54,14 @@ class EntrepriseProfilController extends AbstractController
         
         return $this->render('entreprise_profil/index.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/entreprise/profil/{slug}', name: 'app_entreprise_profil_show')]
+    public function show(EntrepriseProfil $entrepriseProfil): Response
+    {
+        return $this->render('entreprise_profil/show.html.twig', [
+            'entrepriseProfil' => $entrepriseProfil,
         ]);
     }
 }

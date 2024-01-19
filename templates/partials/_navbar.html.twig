@@ -85,7 +85,6 @@
 				</li>
 			</ul>
 
-			
 			{% if is_granted('ROLE_USER') %}
 
 				{% if app.user.status =='Candidat' and app.user.userProfil is null %}
@@ -106,13 +105,15 @@
 				{% endif %}
 
 				{% if app.user.status =='Candidat' and app.user.userProfil is not null %}
+
+
 					<div class="dropdown text-end">
 						<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 							<img src="{{asset('uploads/'~ app.user.userProfil.picture)}}" alt="mdo" width="32" height="32" class="rounded-circle">
 						</a>
 						<ul class="dropdown-menu text-small">
 							<li>
-								<a href="{{path('app_user_profil')}}" class="dropdown-item">Profile</a>
+								<a href="{{path('app_user_profil_show',{'slug':app.user.userProfil.slug})}}" class="dropdown-item">Profile</a>
 							</li>
 
 							<li>
@@ -178,4 +179,3 @@
 		</div>
 	</div>
 </header>
-
