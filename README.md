@@ -201,7 +201,7 @@ Dans cette partie, nous allons créer la partie back-end du site web.
         - salary (int)
         - location (string)
         - contractType (ContractType) => ManyToOne
-        - entreprise (Entreprise) => ManyToOne
+        - entreprise (EntrepriseProfil) => ManyToOne
         - tags (Tag) => ManyToMany
         - isActive (boolean)
     `symfony console make:entity Offer`

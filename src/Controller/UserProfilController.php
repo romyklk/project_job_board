@@ -25,6 +25,7 @@ class UserProfilController extends AbstractController
         // Vérification si l'utilisateur a déjà un profil et le redirige vers son profil
 
         $user = $this->getUser();
+
         if ($user->getUserProfil()) {
             return $this->redirectToRoute('app_user_profil_show', ['slug' => $user->getUserProfil()->getSlug()]);
         }
@@ -67,8 +68,27 @@ class UserProfilController extends AbstractController
 
     // Affichage du profil utilisateur
     #[Route('/user/profil/{slug}', name: 'app_user_profil_show')]
-    public function show(UserProfil $userProfil): Response
+    public function show(string $slug,UserProfilRepository $userProfilRepository): Response
     {
+        // Si l'utilisateur connecté n'est pas le propriétaire du profil, on le redirige vers son profil
+        $user = $this->getUser();
+
+        // Récupération du profil de l'utilisateur connecté
+        $connectedUserProfil = $userProfilRepository->findOneBy(['user' => $user]);
+        // Je récupère le profil de l'utilisateur connecté
+        $userProfil = $userProfilRepository->findOneBy(['slug' => $slug]);
+        if(!$userProfil){
+            return $this->redirectToRoute('app_user_profil_show', ['slug' => $connectedUserProfil->getSlug()]);
+        }
+
+        // Si le slug de l'utilisateur connecté est différent du slug du profil, on le redirige vers son profil
+        if($connectedUserProfil->getSlug() !== $userProfil->getSlug()){
+            return $this->redirectToRoute('app_user_profil_show', ['slug' => $connectedUserProfil->getSlug()]);
+        }
+       
+
+
+
         return $this->render('user_profil/show.html.twig', [
             'userProfil' => $userProfil,
         ]);
