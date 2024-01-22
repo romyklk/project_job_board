@@ -216,9 +216,6 @@ Dans cette partie, nous allons créer la partie back-end du site web.
         `symfony console make:admin:crud` 
 
 
-        
-
-
 ## Partie 5
 
 - [x] Installation de `orm-fixtures` pour générer des données de test.
