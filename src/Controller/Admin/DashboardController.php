@@ -6,6 +6,7 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\HomeSetting;
 use App\Entity\ContractType;
+use App\Entity\Offer;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Locale;
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Paramètres', 'fas fa-cogs', HomeSetting::class);
         yield MenuItem::linkToCrud('Types de contrats', 'fas fa-file-contract', ContractType::class);
         yield MenuItem::linkToCrud('Mot clés', 'fas fa-tags', Tag::class);
+        yield MenuItem::linkToCrud('Offres', 'fas fa-briefcase',Offer::class);
         yield MenuItem::linkToLogout('Logout', 'fa-solid fa-right-from-bracket');
     }
 }

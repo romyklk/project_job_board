@@ -80,7 +80,99 @@ class AppFixtures extends Fixture
             'OVH',
             '1&1',
             'GoDaddy',
-            'Namecheap'
+            'Namecheap',
+            'Cloudflare',
+            'Netlify',
+            'Vercel',
+            'Firebase',
+            'Algolia',
+            'Elasticsearch',
+            'Redis',
+            'RabbitMQ',
+            'Kafka',
+            'Nginx',
+            'Apache',
+            'IIS',
+            'Ansible',
+            'Terraform',
+            'Puppet',
+            'Jenkins',
+            'CircleCI',
+            'TravisCI',
+            'GitLab CI',
+            'Codeship',
+            'Codefresh',
+            'Rust',
+            'Go',
+            'Swift',
+            'Kotlin',
+            'Scala',
+            'Erlang',
+            'Clojure',
+            'Haskell',
+            'F#',
+            'Dart',
+            'TypeScript',
+            'Bash',
+            'PowerShell',
+            'C',
+            'Objective-C',
+            'Assembly',
+            'R',
+            'MATLAB',
+            'Perl',
+            'Lua',
+            'Delphi',
+            'Visual Basic',
+            'VBA',
+            'Fortran',
+            'Ada',
+            'Lisp',
+            'Prolog',
+            'Scheme',
+            'Forth',
+            'COBOL',
+            'RPG',
+            'CI/CD',
+            'DevOps',
+            'TDD',
+            'DDD',
+            'SOLID',
+            'Design Patterns',
+            'Microservices',
+            'Serverless',
+            'REST',
+            'GraphQL',
+            'SOAP',
+            'gRPC',
+            'WebSockets',
+            'OAuth',
+            'OpenAPI',
+            'React JS',
+            'React Native',
+            'Redux',
+            'Vue.js',
+            'Vuex',
+            'Angular',
+            'RxJS',
+            'Ember.js',
+            'Backbone.js',
+            'Polymer',
+            'jQuery',
+            'D3.js',
+            'Bootstrap',
+            'Material UI',
+            'Tailwind CSS',
+            'Sass',
+            'Less',
+            'Stylus',
+            'Bulma',
+            'Foundation',
+            'Jest',
+            'Mocha',
+            'Cypress',
+            'Enzyme',
+            'Laravel'
         ];
 
         foreach ($tabTags as $tag) {
@@ -98,6 +190,9 @@ class AppFixtures extends Fixture
             'Stage',
             'Alternance',
             'Intérim',
+            'Apprentissage',
+            'Professionnalisation',
+            'Autre'
         ];
 
         foreach ($tabContractType as $contractType) {
@@ -117,6 +212,7 @@ class AppFixtures extends Fixture
             $user->setEmail($faker->email());
             $user->setPassword(password_hash('password', PASSWORD_DEFAULT));
             $user->setStatus($userRandomRole);
+            $user->setIsVerified($faker->boolean());
             if ($userRandomRole == 'Professionnel') {
                 $user->setUsername($faker->company());
                 $user->setRoles(['ROLE_PRO']);
@@ -184,15 +280,16 @@ class AppFixtures extends Fixture
         $contractTypes = $manager->getRepository(ContractType::class)->findAll();
 
         
-        for($i= 0 ; $i <=100 ; $i++){
+        for($i= 0 ; $i <=500 ; $i++){
             $offer = new Offer();
             $offer->setTitle($faker->jobTitle());
-            $offer->setShortDescription($faker->word(mt_rand(100,255)));
+            $offer->setShortDescription($faker->paragraph);
             $offer->setContent($faker->paragraph(mt_rand(3, 6)));
-            $offer->setSalary(mt_rand(30000, 100000));
+            $offer->setSalary(mt_rand(30000, 100000)*100);
             $offer->setLocation($faker->city());
             $offer->setContractType($faker->randomElement($contractTypes));
             $offer->setEntreprise($faker->randomElement($recruteurs));
+            $offer->setSlug($faker->slug());
             $randomTags = $faker->randomElements($tags, mt_rand(3, 8));
 
             foreach ($randomTags as $tag) {

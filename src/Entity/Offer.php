@@ -94,7 +94,7 @@ class Offer
         $slugify = new Slugify();
         $this->createdAt = new \DateTimeImmutable();
         $this->isActive = true;
-        $this->slug = $slugify->slugify($this->title) . '' . sha1($this->id);
+        //$this->slug = $slugify->slugify($this->title) . '' . sha1($this->id);
         
     }
     public function getId(): ?int
@@ -245,4 +245,5 @@ class Offer
 
         return $this;
     }
+
 }
