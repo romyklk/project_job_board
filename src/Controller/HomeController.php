@@ -49,5 +49,19 @@ class HomeController extends AbstractController
             'tags' => $tags
         ]);
     }
+
+    #[Route('/offre-emploi/{slug}' , name: 'app_offre_emploi_show')]
+    public function offreEmploiShow($slug,OfferRepository $offerRepository): Response
+    {
+        $offer = $offerRepository->findOneBy(['slug' => $slug]);
+
+        if(!$offer){
+            throw $this->createNotFoundException("L'offre demandée n'existe pas");
+        }
+
+        return $this->render('home/offre_emploi_show.html.twig', [
+            'offer' => $offer
+        ]);
+    }
   
 }
