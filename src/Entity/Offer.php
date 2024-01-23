@@ -83,9 +83,13 @@ class Offer
     #[ORM\Column(nullable: true)]
     private ?bool $isActive = null;
 
+    #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Application::class)]
+    private Collection $applications;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->applications = new ArrayCollection();
     }
     // Les doctrines events sur l'entité
     #[ORM\PrePersist]
@@ -242,6 +246,36 @@ class Offer
     public function setIsActive(?bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Application>
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
+    public function addApplication(Application $application): static
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications->add($application);
+            $application->setOffer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApplication(Application $application): static
+    {
+        if ($this->applications->removeElement($application)) {
+            // set the owning side to null (unless already changed)
+            if ($application->getOffer() === $this) {
+                $application->setOffer(null);
+            }
+        }
 
         return $this;
     }

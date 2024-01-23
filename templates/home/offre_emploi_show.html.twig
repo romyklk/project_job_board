@@ -11,7 +11,8 @@
 			<div class="jumbotron">
 				<div class="container text-center mt-5">
 					<h1 class="">
-						Détails de l'offre : {{offer.title}}
+						Détails de l'offre :
+						{{offer.title}}
 					</h1>
 				</div>
 
@@ -20,47 +21,59 @@
 	</div>
 
 	<div class="container">
-<div class="row my-3">
-	<div class="col-9 border rounded">
-		<h2 class="text-center mb-4">{{offer.title}}</h2>
-		<p class="card-text text-secondary">Lieu de travail :{{offer.entreprise.name}}</p>
-		<p class="card-text">Contrat : {{offer.contractType.name}}</p>
-		<p class="card-text">Salaire:
-			{{offer.salary / 100}}
-			€/an brut</p>
-		<p class="card-text">Présentation du poste : <br>{{offer.shortDescription}}</p>
-		<p class="card-text">Description de l'offre: <br>{{offer.content}}</p>
-		<div class="mb-3">
-			<p class="card-text ">Compétences:</p>
-			<ul class="list-inline">
-				{% for tag in offer.tags %}
-					<li class="list-inline-item">
-						<span class="badge bg-primary">{{tag.name}}</span>
-					</li>
-				{% endfor %}
+		<div class="row my-3">
+			<div class="col-9 border rounded">
+				<h2 class="text-center mb-4">{{offer.title}}</h2>
+				<p class="card-text text-secondary">Lieu de travail :{{offer.entreprise.name}}</p>
+				<p class="card-text">Contrat :
+					{{offer.contractType.name}}</p>
+				<p class="card-text">Salaire:
+					{{offer.salary / 100}}
+					€/an brut</p>
+				<p class="card-text">Présentation du poste :
+					<br>{{offer.shortDescription}}</p>
+				<p class="card-text">Description de l'offre:
+					<br>{{offer.content}}</p>
+				<div class="mb-3">
+					<p class="card-text ">Compétences:</p>
+					<ul class="list-inline">
+						{% for tag in offer.tags %}
+							<li class="list-inline-item">
+								<span class="badge bg-primary">{{tag.name}}</span>
+							</li>
+						{% endfor %}
 
-			</ul>
-		</div>
-		<small class="text-muted">
-			<i class="bi bi-clock"></i>
-			Publié
-			{{offer.createdAt|time_diff(locale='fr')}}
-		</small>
+					</ul>
+				</div>
+				<small class="text-muted">
+					<i class="bi bi-clock"></i>
+					Publié
+					{{offer.createdAt|time_diff(locale='fr')}}
+				</small>
 
-		<div>
-			{% if app.user is null %}
-				<a href="{{path('app_login')}}" class="btn btn-info">
-					Connectez-vous pour postuler
-				</a>
+				<div>
+					{% if app.user is null %}
+						<a href="{{path('app_login')}}" class="btn btn-info">
+							Connectez-vous pour postuler
+						</a>
+					{% endif %}
+
+				</div>
+			</div>
+
+
+			{% if app.user.userProfil is not null %}
+				<div class="col-md-3">
+                    {{ form_start(form) }}
+                    {{ form_row(form.message) }}
+                    {{form_end(form)}}
+                </div>
+
 			{% endif %}
 
+
 		</div>
+
+
 	</div>
-
-	<div class="col-md-3">POSTULER</div>
-
-</div>
-
-
-    </div>
 {% endblock %}

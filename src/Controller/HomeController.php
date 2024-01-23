@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Application;
 use App\Entity\HomeSetting;
+use App\Form\ApplicationType;
 use App\Entity\EntrepriseProfil;
+use App\Repository\ApplicationRepository;
+use App\Repository\TagRepository;
 use App\Repository\OfferRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\HomeSettingRepository;
-use App\Repository\TagRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(EntityManagerInterface $em,HomeSettingRepository $homeSettingRepository,OfferRepository $offerRepository): Response
+    public function index(EntityManagerInterface $em, HomeSettingRepository $homeSettingRepository, OfferRepository $offerRepository): Response
     {
         // Récupération du HomeSetting
 
@@ -37,8 +40,8 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/offre-emploi' , name: 'app_offre_emploi')]
-    public function offreEmploi(OfferRepository $offerRepository,TagRepository $tagRepository): Response
+    #[Route('/offre-emploi', name: 'app_offre_emploi')]
+    public function offreEmploi(OfferRepository $offerRepository, TagRepository $tagRepository): Response
     {
         $offers = $offerRepository->findBy([], ['id' => 'DESC']);
 
@@ -50,18 +53,50 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/offre-emploi/{slug}' , name: 'app_offre_emploi_show')]
-    public function offreEmploiShow($slug,OfferRepository $offerRepository): Response
+    #[Route('/offre-emploi/{slug}', name: 'app_offre_emploi_show')]
+    public function offreEmploiShow($slug, OfferRepository $offerRepository, ApplicationRepository $applicationRepository,EntityManagerInterface $em): Response
     {
+        $user = $this->getUser();
+       
         $offer = $offerRepository->findOneBy(['slug' => $slug]);
 
-        if(!$offer){
+        if (!$offer) {
             throw $this->createNotFoundException("L'offre demandée n'existe pas");
         }
 
+        $entreprise = $offer->getEntreprise();
+
+        $existingsApplication = $applicationRepository->findOneBy(
+            ['offer' => $offer, 'user' => $user,'entreprise' => $entreprise],
+
+        );
+
+        if ($existingsApplication) {
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'top')
+            ->addWarning('Vous avez déjà postulé à cette offre');
+        }
+
+        
+        $application = new Application();
+        $form = $this->createForm(ApplicationType::class, $application);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            dd($form->getData());
+            $application->setUser($user);
+            $application->setOffer($offer);
+            $application->setCreatedAt(new \DateTimeImmutable());
+            $application->setMessage($form->get('message')->getData());
+            $application->setStatus('STATUS_PENDING');
+            $em->persist($application);
+            $em->flush();
+        }
+
         return $this->render('home/offre_emploi_show.html.twig', [
-            'offer' => $offer
+            'offer' => $offer,
+            'form' => $form->createView(),
+            'existingsApplication' => $existingsApplication
         ]);
     }
-  
 }
