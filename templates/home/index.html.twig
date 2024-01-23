@@ -9,8 +9,12 @@
 	<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-inner">
 			{% for setting in settings %}
+
 <div class="carousel-item {% if loop.first %} active {% endif %}">
-					<img src="{{asset('uploads/'~ setting.image)}}" class="d-block w-100 home-img" alt="First Image">
+<img src="{{setting.image}}" class="d-block w-100 home-img" alt="First Image">
+
+					{# <img src="{{asset('uploads/'~ setting.image)}}" class="d-block w-100 home-img" alt="First Image"> #}
+
 					<div class="carousel-caption d-none d-md-flex align-items-center justify-content-start h-100">
 						<div class="col-9">
 							<h3 class="text-left home-text">
