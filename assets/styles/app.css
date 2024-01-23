@@ -57,3 +57,12 @@ p, a, span, li, label, input, textarea, select, button{
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
 }
+
+.jumbotron{
+    background: #000046;
+        background: -webkit-linear-gradient(to right, #1CB5E0, #000046);
+        background: linear-gradient(to right, #1CB5E0, #000046);
+    color: #fff;
+    height: 200px;
+    overflow: hidden;
+}
