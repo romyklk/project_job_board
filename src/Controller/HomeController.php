@@ -80,7 +80,7 @@ class HomeController extends AbstractController
         }
         $application = new Application();
         $form = $this->createForm(ApplicationType::class, $application);
-        if ($user && !$existingsApplication) {
+     
 
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -96,12 +96,13 @@ class HomeController extends AbstractController
                     ->position('x', 'right')
                     ->position('y', 'top')
                     ->addSuccess('Votre candidature a bien été envoyée');
+            return $this->redirectToRoute('app_offre_emploi_show', ['slug' => $offer->getSlug()]);
             }
 
-            return $this->redirectToRoute('app_offre_emploi_show', ['slug' => $offer->getSlug()]);
+           
 
             
-        }
+        
 
         return $this->render('home/offre_emploi_show.html.twig', [
             'offer' => $offer,

@@ -248,7 +248,10 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 - [x] Création de la route `/apply/{id}` qui permet à l'utilisateur de postuler à une offre d'emploi.L'utilisateur doit être connecté pour pouvoir postuler à une offre d'emploi.
 - [x] Création de la route `/account/application` qui permet à l'utilisateur de voir ses candidatures.
 - [x] Création de la route `/entreprise/application` qui permet à l'entreprise de voir les candidatures à ses offres d'emploi.
-  
+
+### PRE PROD
+
+
 
 
 ### REFACTORING
