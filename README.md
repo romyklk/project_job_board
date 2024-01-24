@@ -254,6 +254,16 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 1. Création des différentes pages d'erreur 404, 403, 500 etc...
 2. Compiler les assets `php bin/console asset-map:compile`
 3. Création du fichier .htaccess `composer require symfony/apache-pack`
+4. Création du fichier .env.local et ajout de la variable d'environnement APP_ENV=prod
+
+### PROD
+
+1. Création de la base de données sur le serveur de production.
+2. Exporter la base de données de développement et l'importer sur le serveur de production.
+3. Modifier le fichier .env.local sur le serveur de production.
+4. Se connecter au serveur de production en ssh. exemple: `ssh MonID@SERVER_IP` je valide avec mon mot de passe.
+5. Se rendre dans le dossier du projet sur le serveur de production.
+6. 
 
 
 ### REFACTORING
