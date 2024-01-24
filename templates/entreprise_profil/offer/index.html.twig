@@ -35,13 +35,14 @@
 							</thead>
 							<tbody>
 								{% for offer in offers %}
+
 									<tr>
 										<td>{{ offer.title}}</td>
 										<td>{{ offer.contractType.name}}</td>
 										<td>{{ offer.salary}}</td>
 										<td>{{ offer.location}}</td>
 										<td>{{ offer.CreatedAt|date('Y-m-d H:i:s')}}</td>
-										<td></td>
+										<td>{{offer.applications|length}}</td>
 										<td>
 											<a href="{{ path('app_offer_show', {'slug': offer.slug}) }} " class="btn btn-primary">
 												<i class="bi bi-eye"></i>

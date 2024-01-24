@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\OfferFormType;
+use App\Repository\ApplicationRepository;
 use App\Repository\OfferRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class OfferController extends AbstractController
         $Offers = $offerRepository->findByEntreprise($company);
 
 
-        return $this->render('offer/index.html.twig', [
+        return $this->render('entreprise_profil/offer/index.html.twig', [
             'offers' => $Offers,
         ]);
     }
@@ -70,13 +71,13 @@ class OfferController extends AbstractController
             return $this->redirectToRoute('app_offer');
         }
 
-        return $this->render('offer/create.html.twig', [
+        return $this->render('entreprise_profil/offer/create.html.twig', [
             'offerForm' => $form->createView(),
         ]);
     }
 
     #[Route('/entreprise/offer/show/{slug}', name: 'app_offer_show')]
-    public function show(string $slug, OfferRepository $offerRepository): Response
+    public function show(string $slug, OfferRepository $offerRepository,ApplicationRepository $applicationRepository): Response
     {
         $user = $this->getUser();
 
@@ -95,8 +96,14 @@ class OfferController extends AbstractController
             return $this->redirectToRoute('app_offer');
         }
 
-        return $this->render('offer/show.html.twig', [
-            'offer' => $offer
+        // Récupartions des candidatures
+
+        $applications = $applicationRepository->findBy(['offer' => $offer]);
+
+
+        return $this->render('entreprise_profil/offer/show.html.twig', [
+            'offer' => $offer,
+            'applications' => $applications
 
         ]);
     }
@@ -136,7 +143,7 @@ class OfferController extends AbstractController
             return $this->redirectToRoute('app_offer');
         }
 
-        return $this->render('offer/edit.html.twig', ['offerForm' => $form->createView()]);
+        return $this->render('entreprise_profil/offer/edit.html.twig', ['offerForm' => $form->createView()]);
     }
 
 

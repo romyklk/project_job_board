@@ -6,7 +6,9 @@ use Faker\Factory;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\Offer;
+use DateTimeImmutable;
 use App\Entity\UserProfil;
+use App\Entity\Application;
 use App\Entity\HomeSetting;
 use App\Entity\ContractType;
 use App\Entity\EntrepriseProfil;
@@ -210,7 +212,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $userRandomRole = $faker->randomElement($tabRoles);
             $user->setEmail($faker->email());
-            $user->setPassword(password_hash('password', PASSWORD_DEFAULT));
+            $user->setPassword(password_hash('Bonjour', PASSWORD_DEFAULT));
             $user->setStatus($userRandomRole);
             $user->setIsVerified($faker->boolean());
             if ($userRandomRole == 'Professionnel') {
@@ -297,7 +299,27 @@ class AppFixtures extends Fixture
             }
             $manager->persist($offer);
         }
+        $manager->flush();
 
+        // Insertion des candidatures
+
+        $candidates = $manager->getRepository(User::class)->findByStatus('Candidat');
+        $offers = $manager->getRepository(Offer::class)->findAll();
+
+        for($i=0; $i <4000 ; $i++){
+            $randomCandidate = $faker->randomElement($candidates);
+            $randomOffer = $faker->randomElement($offers);
+            $application = new Application();
+            $application->setUser($randomCandidate);
+            $application->setOffer($randomOffer);
+            $application->setEntreprise($randomOffer->getEntreprise());
+            $application->setMessage($faker->paragraph(mt_rand(1, 3)));
+            $application->setCreatedAt(new DateTimeImmutable());
+            $application->setStatus($faker->randomElement(['STATUS_PENDING', 'STATUS_ACCEPTED', 'STATUS_REFUSED']));
+            $manager->persist($application);
+        }
         $manager->flush();
     }
 }
+
+

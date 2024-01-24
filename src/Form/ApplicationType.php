@@ -10,7 +10,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ApplicationType extends AbstractType
@@ -25,11 +24,6 @@ class ApplicationType extends AbstractType
                     'rows' => 10,
                     'class' => 'mt-5'
                     
-                ]
-            ])
-            ->add('Envoyer', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary mt-3'
                 ]
             ])
         ;
