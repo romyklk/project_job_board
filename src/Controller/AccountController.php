@@ -22,6 +22,11 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('app_user_profil_show', ['slug' => $user->getUserProfil()->getSlug()]);
         }
 
+        if ($user->getRoles()[0] === 'ROLE_ADMIN') {
+            return $this->redirectToRoute('admin');
+        }
+
+
         return $this->render('account/index.html.twig');
     }
 }

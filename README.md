@@ -251,7 +251,9 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 
 ### PRE PROD
 
-
+1. Création des différentes pages d'erreur 404, 403, 500 etc...
+2. Compiler les assets `php bin/console asset-map:compile`
+3. Création du fichier .htaccess `composer require symfony/apache-pack`
 
 
 ### REFACTORING
