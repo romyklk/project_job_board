@@ -318,6 +318,17 @@ class AppFixtures extends Fixture
             $application->setStatus($faker->randomElement(['STATUS_PENDING', 'STATUS_ACCEPTED', 'STATUS_REFUSED']));
             $manager->persist($application);
         }
+
+        // Création d'un compte admin
+
+        $user = new User();
+        $user->setEmail('romy@romy.com');
+        $user->setPassword(password_hash('romy@romy.com', PASSWORD_DEFAULT));
+        $user->setStatus('Admin');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setUsername('Romy Admin');
+        $user->setIsVerified(true);
+        $manager->persist($user);
         $manager->flush();
     }
 }

@@ -94,7 +94,8 @@
 									<td>{{ application.message|slice(0,50) }}...</td>
 									<td>{{ application.createdAt|ago(locale='fr') }}</td>
 									<td>
-										<a href="" class="btn btn-info">
+										<a href="{{path('app_offer_candidate',{'slug':application.offer.slug,'id':application.id})}}" class="btn btn-info">
+
 											<i class="bi bi-pen-fill"></i>
 										</a>
 									</td>
@@ -103,7 +104,6 @@
 							{% endfor %}
 						</tbody>
 					</table>
-
 				</div>
 
 

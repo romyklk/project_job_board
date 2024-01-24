@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\OfferFormType;
-use App\Repository\ApplicationRepository;
+use App\Form\ApplyStatusType;
 use App\Repository\OfferRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ApplicationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,7 +78,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/entreprise/offer/show/{slug}', name: 'app_offer_show')]
-    public function show(string $slug, OfferRepository $offerRepository,ApplicationRepository $applicationRepository): Response
+    public function show(string $slug, OfferRepository $offerRepository, ApplicationRepository $applicationRepository): Response
     {
         $user = $this->getUser();
 
@@ -88,7 +89,7 @@ class OfferController extends AbstractController
         }
         $offer = $offerRepository->findOneBy(['slug' => $slug]);
 
-        if(!$offer){
+        if (!$offer) {
             return $this->redirectToRoute('app_offer');
         }
         // Vérifier que l'offre appartient bien à l'entreprise connectée
@@ -146,5 +147,35 @@ class OfferController extends AbstractController
         return $this->render('entreprise_profil/offer/edit.html.twig', ['offerForm' => $form->createView()]);
     }
 
+    #[Route('/entreprise/offer/{slug}/candidate/{id}', name: 'app_offer_candidate')]
+    public function getCandidate(string $id, string $slug, Request $request, EntityManagerInterface $em,  OfferRepository $offerRepository, ApplicationRepository $applicationRepository): Response
+    {
+        $offer = $offerRepository->findOneBy(['slug' => $slug]);
 
+        $candidate = $applicationRepository->findOneBy(['id' => $id]);
+
+        $form = $this->createForm(ApplyStatusType::class, $candidate);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->flush();
+
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->addSuccess('La candidature a bien été modifiée.');
+
+            return $this->redirectToRoute('app_offer_show', ['slug' => $offer->getSlug()]);
+        }
+
+        return $this->render(
+            'entreprise_profil/offer/candidate.html.twig',
+            [
+                'candidate' => $candidate,
+                'statusForm' => $form->createView()
+            ]
+        );
+    }
 }
