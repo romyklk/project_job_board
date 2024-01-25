@@ -42,11 +42,15 @@ class HomeController extends AbstractController
     }
 
     #[Route('/offre-emploi', name: 'app_offre_emploi')]
-    public function offreEmploi(OfferRepository $offerRepository, TagRepository $tagRepository): Response
+    public function offreEmploi(OfferRepository $offerRepository, TagRepository $tagRepository,Request $request): Response
     {
-        $offers = $offerRepository->findBy([], ['id' => 'DESC']);
+       // $offers = $offerRepository->findBy([], ['id' => 'DESC']);
 
         $tags = $tagRepository->findAll();
+
+        $page = $request->query->get('page', 1);
+        
+        $offers = $offerRepository->findPaginatedOffers($page, 8);
 
         return $this->render('home/offre_emploi.html.twig', [
             'offers' => $offers,
