@@ -46,11 +46,16 @@
 				{% include "partials/_job_card.html.twig" %}
 			{% endfor %}
 			<!-- Fin carte offre d'emploi -->
+			<div class="d-grid gap-2 col-6 mx-auto">
+				<a href="{{path('app_offre_emploi')}}" class="btn btn-primary">Voir plus</a>
+
+			</div>
+
 		</div>
 	</section>
 
 
-<section class="container py-5 m-1  mx-auto">
+	<section class="container py-5 m-1  mx-auto">
 
 		<h2 class="text-center mb-4">Entreprises récentes</h2>
 		<div

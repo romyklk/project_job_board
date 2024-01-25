@@ -168,4 +168,6 @@ class UserProfilController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
+
+    // Voir mes candidatures
 }
