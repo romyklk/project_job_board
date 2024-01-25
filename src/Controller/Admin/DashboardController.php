@@ -41,11 +41,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Job Board Admin')
-        ->setLocales([
-            'fr' => 'Français',
-            'en' => 'English',           
-        ]);
+            ->setTitle('Job Board Admin');
         
     }
 
