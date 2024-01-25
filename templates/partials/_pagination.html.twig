@@ -1,6 +1,18 @@
+{% if '/offre-emploi' in app.request.requestUri %}
 {% set routeName = 'app_offre_emploi' %}
 {% set pages = offers.pages %}
 {% set page = offers.page %}
+{% endif %}
+
+
+
+{% if '/entreprises'in  app.request.requestUri  %}
+{% set routeName = 'app_entreprises' %}
+{% set pages = entreprises.pages %}
+{% set page = entreprises.page %}
+{% endif %}
+
+
 
 
 <nav aria-label="...">

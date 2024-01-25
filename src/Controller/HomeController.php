@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ApplicationRepository;
 use App\Repository\HomeSettingRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\EntrepriseProfilRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -112,6 +113,21 @@ class HomeController extends AbstractController
             'offer' => $offer,
             'form' => $form->createView(),
             'existingsApplication' => $existingsApplication
+        ]);
+    }
+
+    // GESTION DE L'AFFICHAGE DES ENTREPRISES
+    #[Route('/entreprises', name: 'app_entreprises')]
+    public function entreprises(EntrepriseProfilRepository $entrepriseProfilRepository, Request $request): Response
+    {
+
+        $page = $request->query->get('page', 1);
+
+        $entreprises = $entrepriseProfilRepository->findPaginatedEntreprises($page, 8);
+       
+
+        return $this->render('home/entreprises.html.twig', [
+            'entreprises' => $entreprises
         ]);
     }
 }
