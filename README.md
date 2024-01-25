@@ -263,7 +263,45 @@ Dans cette partie, nous allons créer la partie back-end du site web.
 3. Modifier le fichier .env.local sur le serveur de production.
 4. Se connecter au serveur de production en ssh. exemple: `ssh MonID@SERVER_IP` je valide avec mon mot de passe.
 5. Se rendre dans le dossier du projet sur le serveur de production.
-6. 
+6. Se positionner sur le dossier du projey en local et faire `scp votre_fichier.zip MonID@SERVER_IP:/DOSSIER_DU_PROJET`
+7. Se rendre dans le dossier du projet sur le serveur de production et faire `unzip votre_fichier.zip`
+8. Pointer le domaine vers le dossier public du projet.
+
+### HEROKU
+
+1. Créer un compte sur heroku.com
+2. Installer le cli heroku sur votre machine locale ou déployer depuis github.
+
+## AVEC LA CLI HEROKU
+- Se connecter à Heroku en ligne de commande
+    `heroku login`
+- Créer une application sur Heroku
+    `heroku create`
+- Déployer l'application sur Heroku
+    `git add .`
+    `git commit -m "first commit"`
+    `git push heroku master`
+- Créer la base de données sur Heroku dans la partie ressources et choisir le plan gratuit.(JawsDB MySQL ou ClearDB MySQL - Free)
+- Allez dans la partie settings et cliquer sur `Reveal Config Vars` et ajouter les variables d'environnement.(APP_ENV=prod, DATABASE_URL=...). Pour DATABASE_URL, vous pouvez récupérer l'url de la base de données dans la partie ressources ou dans la partie settings dans la partie Config Vars changer le nom _URL par DATABASE_URL.
+- Créer le fichier procfile à la racine du projet et ajouter la ligne suivante: `web: heroku-php-apache2 public/`
+- J'ajoute dans le fichier `composer.json` les scripts suivants:
+    `"compile": [
+        "php bin/console cache:clear --env=prod",
+        "php bin/console doctrine:migrations:migrate --no-interaction",
+    ],`
+
+- Déplacer la ligne `"doctrine/doctrine-fixtures-bundle": "^3.5"` qui se trouve dans require dev dans require.
+
+-Allez dans `/config/bundles.php` et mettre la ligne suivante en commentaire:
+    `Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['all' => true],`
+
+- Faire un commit et un push sur heroku
+    `git add .`
+    `git commit -m "first commit"`
+    `git push heroku master`
+
+
+
 
 
 ### REFACTORING

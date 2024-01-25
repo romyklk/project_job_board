@@ -110,15 +110,20 @@
 
 					<div class="dropdown text-end">
 						<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="{{asset('uploads/'~ app.user.userProfil.picture)}}" alt="mdo" width="32" height="32" class="rounded-circle">
+
+							{% if 'https://api.dicebear.com' in app.user.userProfil.picture %}
+								<img src="{{ app.user.userProfil.picture}}" alt="{{ app.user.userProfil.slug }}" class="img-fluid rounded shadow-lg" width="32" height="32" class="rounded-circle">
+
+							{% else %}
+								<img src="{{ asset('uploads/' ~ app.user.userProfil.picture) }}" alt="{{ app.user.userProfil.slug }}" class="img-fluid rounded shadow-lg" width="32" height="32" class="rounded-circle">
+
+
+							{% endif %}
+
 						</a>
 						<ul class="dropdown-menu text-small">
 							<li>
 								<a href="{{path('app_user_profil_show',{'slug':app.user.userProfil.slug})}}" class="dropdown-item">Profile</a>
-							</li>
-
-							<li>
-								<a class="dropdown-item" href="#">Settings</a>
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li>
@@ -137,8 +142,8 @@
 						<ul class="dropdown-menu text-small">
 							<li>
 								<a class="dropdown-item" href="{{path('app_entreprise_profil')}}">Profile</a>
-
 							</li>
+
 							<li><hr class="dropdown-divider"></li>
 							<li>
 								<a class="dropdown-item" href="{{path('app_logout')}}">Sign out</a>
@@ -146,11 +151,18 @@
 						</ul>
 					</div>
 				{% endif %}
+				{# app.user.entrepriseProfil.logo #}
 
 				{% if app.user.status =='Professionnel' and app.user.entrepriseProfil is not null %}
+
 					<div class="dropdown text-end">
 						<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="{{asset('uploads/'~ app.user.entrepriseProfil.logo)}}" alt="mdo" width="32" height="32" class="rounded-circle">
+							{% if 'https://' in app.user.entrepriseProfil.logo %}
+								<img src="{{asset(app.user.entrepriseProfil.logo)}}" alt="mdo" width="32" height="32" class="rounded-circle">
+							{% else %}
+								<img src="{{asset('uploads/' ~ app.user.entrepriseProfil.logo)}}" alt="mdo" width="32" height="32" class="rounded-circle">
+
+							{% endif %}
 						</a>
 						<ul class="dropdown-menu text-small">
 							<li>
@@ -158,7 +170,8 @@
 							</li>
 
 							<li>
-								<a class="dropdown-item" href="#">Settings</a>
+								<a class="dropdown-item" href="{{path('app_offer')}}">Mes Offres</a>
+
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li>
