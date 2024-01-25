@@ -7,13 +7,9 @@
 		<ul class="nav nav-pills flex-column mb-auto menu-link-items">
 			{% if app.user.userProfil %}
 				<li>
-					<a href="#" class="nav-link text-white">
+					<a href="{{path('app_user_profil_candidatures',{'slug':app.user.userProfil.slug})}}" class="nav-link text-white">
+
 						Mes candidatures
-					</a>
-				</li>
-				<li>
-					<a href="#" class="nav-link text-white">
-						Mes informations
 					</a>
 				</li>
 			{% endif %}

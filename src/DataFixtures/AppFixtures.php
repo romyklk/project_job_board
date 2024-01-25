@@ -208,7 +208,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         $tabRoles = ['Candidat', 'Professionnel'];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $user = new User();
             $userRandomRole = $faker->randomElement($tabRoles);
             $user->setEmail($faker->email());
@@ -282,7 +282,7 @@ class AppFixtures extends Fixture
         $contractTypes = $manager->getRepository(ContractType::class)->findAll();
 
         
-        for($i= 0 ; $i <=5 ; $i++){
+        for($i= 0 ; $i <=500 ; $i++){
             $offer = new Offer();
             $offer->setTitle($faker->jobTitle());
             $offer->setShortDescription($faker->paragraph);
@@ -306,7 +306,7 @@ class AppFixtures extends Fixture
         $candidates = $manager->getRepository(User::class)->findByStatus('Candidat');
         $offers = $manager->getRepository(Offer::class)->findAll();
 
-        for($i=0; $i <4 ; $i++){
+        for($i=0; $i <200 ; $i++){
             $randomCandidate = $faker->randomElement($candidates);
             $randomOffer = $faker->randomElement($offers);
             $application = new Application();

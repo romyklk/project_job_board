@@ -1,0 +1,51 @@
+{% extends 'user_profil/index.html.twig' %}
+
+
+{% block title %}
+	{{ parent() }}
+	- Mes Candidatures
+{% endblock %}
+
+{% block content %}
+		<h5 class="text-center fw-bold mt-5 mb-3">
+			Mes candidatures
+		</h5>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Titre</th>
+					<th scope="col">Statut</th>
+					<th scope="col">Description</th>
+					<th scope="col">Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for application in applications %}
+					<tr>
+						<td>{{application.offer.title}}</td>
+						<td>
+							{% if application.status =="STATUS_ACCEPTED" %}
+								<badge class="badge bg-success">
+									Accepté
+								</badge>
+							{% endif %}
+							{% if application.status =="STATUS_REFUSED" %}
+								<badge class="badge bg-danger">
+									Refusé
+								</badge>
+							{% endif %}
+							{% if application.status =="STATUS_PENDING" %}
+								<badge class="badge bg-warning">
+									En cours
+								</badge>
+
+							{% endif %}
+						</td>
+						<td>{{application.message|slice(0, 100)}}</td>
+						<td>{{application.createdAt|date("m/d/Y")}}</td>
+					</tr>
+				{% endfor %}
+
+            </tbody>
+        </table>
+			{% endblock %}

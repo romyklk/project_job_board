@@ -103,12 +103,7 @@ class HomeController extends AbstractController
                     ->addSuccess('Votre candidature a bien été envoyée');
             return $this->redirectToRoute('app_offre_emploi_show', ['slug' => $offer->getSlug()]);
             }
-
-           
-
             
-        
-
         return $this->render('home/offre_emploi_show.html.twig', [
             'offer' => $offer,
             'form' => $form->createView(),

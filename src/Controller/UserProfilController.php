@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Services\UploadFilesService;
 use App\Entity\UserProfil;
 use App\Form\UserProfilType;
+use App\Repository\ApplicationRepository;
 use App\Repository\UserProfilRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -170,4 +171,20 @@ class UserProfilController extends AbstractController
     }
 
     // Voir mes candidatures
+
+   #[Route('/user/profil/{slug}/candidatures', name: 'app_user_profil_candidatures')]
+
+   public function getCandidatures(string $slug,ApplicationRepository $applicationRepository):Response
+   {
+
+    $user = $this->getUser();
+
+    $applications = $applicationRepository->findBy(['user' => $user]);
+
+
+    return $this->render('user_profil/candidatures.html.twig', [
+            'applications' => $applications,
+    ]);
+   }
+
 }
